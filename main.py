@@ -44,9 +44,10 @@ def on_change_selection(event):
 
     for item in ans['data']['cryptoCurrencyList']:
         if curr in item['symbol'].lower() == curr:
-            lbl.configure(text=(f"{item['name']} ({item['symbol']})"))
+            lbl.configure(text=(f"{item['name']}({item['symbol']})"))
             lbl2.configure(text=(f"{round(item['quotes'][0]['price'], 2)}$"))
             lbl3.configure(text=(f"{round(item['quotes'][0]['percentChange1h'], 4)}%"))
+            lbl6.configure(text=(f"Количество монет - {round(item['totalSupply'], 1)}\n Рыночная капитализация - {round(item['quotes'][0]['marketCap'], 1)}USD"))
             color_change = item['quotes'][0]['percentChange1h']
             col_ch(color_change)
             entry.delete(0, END)
@@ -57,11 +58,12 @@ def on_change_selection(event):
             r = requests.get(url=f'https://s2.coinmarketcap.com/static/img/coins/64x64/{item.get("id")}.png')
             pil_image = Image.open(BytesIO(r.content))
             pil_image.save(BytesIO(), format='PNG')
+            pil_image.thumbnail((64, 64))
 
             img = ImageTk.PhotoImage(pil_image)
             Label1 = tkinter.Label(image=img)
             Label1.image = img
-            Label1.place(x=60, y=330)
+            Label1.place(x=55, y=330)
 
 
 def col_ch(color_change):
@@ -79,7 +81,7 @@ def col_ch(color_change):
 root = Tk()
 
 root.title('Crypto parser')
-root.geometry('500x450')
+root.geometry('500x520')
 root['background']
 
 lbl5 = Label(root, text="")
@@ -117,6 +119,11 @@ lbl2.place(x=150,y=360)
 lbl3 = Label(root, text=" ", font=("Arial Black", 10))
 lbl3.place(x=350,y=380)
 
+lb = Listbox(root, height = 4, width= 72, bd= 5, relief = 'groove')
+lb.place(x=30,y=440)
 
+lbl6 = Label(root, text=" ", font=("Arial Black", 10), bg= 'white')
+lbl6.place(x=60,y=450)
 
 root.mainloop()
+
