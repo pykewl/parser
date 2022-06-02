@@ -7,7 +7,7 @@ from pprint import pprint
 
 
 
-ans = requests.get(url=f'https://api.coinmarketcap.com/data-api/v3/cryptocurrency/listing',
+ans = requests.get(url=f'https://api.coinmarketcap.com/data-api/v3/cryptocurrency/listing?start=1&limit=500',
                         stream=True
         ).json()
 lst = []
@@ -126,4 +126,5 @@ lbl3.place(x=350,y=380)
 
 
 root.mainloop()
+
 
