@@ -1,13 +1,9 @@
 import tkinter
 from tkinter import *
-import pymorphy2
 import requests
 from io import BytesIO
 from PIL import Image, ImageTk
 from pprint import pprint
-
-import PIL.Image
-import concurrent.futures
 
 
 
@@ -47,16 +43,18 @@ def on_change_selection(event):
             lbl.configure(text=(f"{item['name']}({item['symbol']})"))
             lbl2.configure(text=(f"{round(item['quotes'][0]['price'], 2)}$"))
             lbl3.configure(text=(f"{round(item['quotes'][0]['percentChange1h'], 4)}%"))
-            dlc_info = f"Дополнительная информация:\n Количество монет - {round(item['totalSupply'], 1)}\n Рыночная капитализация - {round(item['quotes'][0]['marketCap'], 1)}USD"
+            dlc_info = f"Количество монет - {round(item['totalSupply'], 1)}\n Рыночная капитализация - {round(item['quotes'][0]['marketCap'], 1)}USD"
             color_change = item['quotes'][0]['percentChange1h']
             col_ch(color_change)
             entry.delete(0, END)
-            lb = tkinter.Listbox(root, height=5, width=72, bd=5, relief='groove')
-            lb.place(x=30, y=440)
+            lb = tkinter.Listbox(root, height=3, width=72, bd=5, relief='groove')
+            lb.place(x=30, y=460)
+            lbl7 = tkinter.Label(root, text="Дополнительная информация:", font=("Arial Black", 10), fg = 'grey')
+            lbl7.place(x=130, y=430)
             lbl6 = tkinter.Label(root, text=dlc_info, font=("Arial Black", 10), bg='white')
-            lbl6.place(x=60, y=455)
+            lbl6.place(x=70, y=470)
             lb2 = tkinter.Listbox(root, height=4, width=11, bd=5, relief='groove')
-            lb2.place(x=52, y=327)
+            lb2.place(x=52, y=329)
             check_input()
 
     for item in ans['data']['cryptoCurrencyList']:
@@ -69,7 +67,7 @@ def on_change_selection(event):
             img = ImageTk.PhotoImage(pil_image)
             Label1 = tkinter.Label(image=img)
             Label1.image = img
-            Label1.place(x=55, y=330)
+            Label1.place(x=55, y=332)
 
 
 def col_ch(color_change):
@@ -89,6 +87,7 @@ root = Tk()
 root.title('Crypto parser')
 root.geometry('500x540')
 root['background']
+root.resizable(width=False, height=False)
 
 lbl5 = Label(root, text="")
 lbl5.pack()
@@ -115,8 +114,8 @@ my_scrollbar.pack(side = RIGHT, fill =Y)
 my_frame.pack()
 
 
-lbl = Label(root, text=" ", font=("Arial Black", 25))
-lbl.place(x=150,y=310)
+lbl = Label(root, text=" ", font=("Arial Black", 20))
+lbl.place(x=150,y=320)
 
 lbl2 = Label(root, text=" ", font=("Arial Black", 25))
 lbl2.place(x=150,y=360)
@@ -127,5 +126,4 @@ lbl3.place(x=350,y=380)
 
 
 root.mainloop()
-
 
