@@ -47,10 +47,16 @@ def on_change_selection(event):
             lbl.configure(text=(f"{item['name']}({item['symbol']})"))
             lbl2.configure(text=(f"{round(item['quotes'][0]['price'], 2)}$"))
             lbl3.configure(text=(f"{round(item['quotes'][0]['percentChange1h'], 4)}%"))
-            lbl6.configure(text=(f"Дополнительная информация:\n Количество монет - {round(item['totalSupply'], 1)}\n Рыночная капитализация - {round(item['quotes'][0]['marketCap'], 1)}USD"))
+            dlc_info = f"Дополнительная информация:\n Количество монет - {round(item['totalSupply'], 1)}\n Рыночная капитализация - {round(item['quotes'][0]['marketCap'], 1)}USD"
             color_change = item['quotes'][0]['percentChange1h']
             col_ch(color_change)
             entry.delete(0, END)
+            lb = tkinter.Listbox(root, height=5, width=72, bd=5, relief='groove')
+            lb.place(x=30, y=440)
+            lbl6 = tkinter.Label(root, text=dlc_info, font=("Arial Black", 10), bg='white')
+            lbl6.place(x=60, y=455)
+            lb2 = tkinter.Listbox(root, height=4, width=11, bd=5, relief='groove')
+            lb2.place(x=52, y=327)
             check_input()
 
     for item in ans['data']['cryptoCurrencyList']:
@@ -119,11 +125,7 @@ lbl2.place(x=150,y=360)
 lbl3 = Label(root, text=" ", font=("Arial Black", 10))
 lbl3.place(x=350,y=380)
 
-lb = Listbox(root, height = 5, width= 72, bd= 5, relief = 'groove')
-lb.place(x=30,y=440)
-
-lbl6 = Label(root, text=" ", font=("Arial Black", 10), bg= 'white')
-lbl6.place(x=60,y=455)
 
 root.mainloop()
+
 
